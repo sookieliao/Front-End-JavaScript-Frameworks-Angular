@@ -38,8 +38,10 @@
 
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <h3>Send us your feedback!</h3>
+    <p>{{ feedbackForm.value | json}}</p>
+    <p>{{ feedbackForm.status | json}}</p>
     <!-- the [formGroup] will tight us into the specified reactive form model -->
-    <form novalidate [formGroup]="feedbackForm"> 
+    <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()"> 
       <p>
         <mat-form-field class="half-width">
           <!-- the "formControlName" will bind the input with the property defined in the form model. -->
@@ -71,7 +73,7 @@
       </table>
       <p>
         <mat-form-field class="full-width">
-          <textarea matInput formContrlName="message" placeholder="Your feed back..." rows=12></textarea>
+          <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12></textarea>
         </mat-form-field>
       </p>
       <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>   
