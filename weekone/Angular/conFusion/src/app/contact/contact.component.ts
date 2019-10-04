@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Feedback, ContactType } from '../shared/feedback';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { stringify } from '@angular/core/src/util';
 
 @Component({
   selector: 'app-contact',
@@ -12,7 +11,7 @@ export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
-  contactTYpe = ContactType;
+  contactType = ContactType;
 
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
