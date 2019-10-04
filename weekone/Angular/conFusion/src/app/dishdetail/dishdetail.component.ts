@@ -21,7 +21,7 @@ export class DishdetailComponent implements OnInit {
   ngOnInit() {
     //this.route.snapshot.params['id'] gives access to parameters declaired in the Routes paths.
     let id = this.route.snapshot.params['id'];
-    this.dish = this.dishService.getDish(id);
+    this.dishService.getDish(id).then((dish) => this.dish = dish);
   }
 
   // the location service provides method "back", 
