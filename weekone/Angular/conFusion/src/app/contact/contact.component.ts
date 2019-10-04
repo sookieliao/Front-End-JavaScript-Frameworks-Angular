@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Feedback, ContactType } from '../shared/feedback';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,6 +12,7 @@ export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
+  @ViewChild('fform') feedbackFormDirective; // this gives us access to the template form.
 
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
@@ -24,6 +25,21 @@ export class ContactComponent implements OnInit {
   // But we need to map this into the view/template
   createForm() {
     this.feedbackForm = this.formBuilder.group({
+      firstname: ['',Validators.required],
+      lastname: ['',Validators.required],
+      telnum: [0,Validators.required],
+      email: ['',Validators.required],
+      agree: false,
+      contacttype: 'None',
+      message: ''
+    });
+    
+  }
+
+  onSubmit() {
+    this.feedback = this.feedbackForm.value;  //We can do so IFF both model are exactly the same.
+    console.log(this.feedback);
+    this.feedbackForm.reset({    //reset() takes one object property, to which it's going to reset to values.
       firstname: '',
       lastname: '',
       telnum: 0,
@@ -32,12 +48,7 @@ export class ContactComponent implements OnInit {
       contacttype: 'None',
       message: ''
     });
-  }
-
-  onSubmit() {
-    this.feedback = this.feedbackForm.value;  //We can do so IFF both model are exactly the same.
-    console.log(this.feedback);
-    this.feedbackForm.reset();
+    this.feedbackFormDirective.resetForm(); // this will reset the template.
   }
 }
   
