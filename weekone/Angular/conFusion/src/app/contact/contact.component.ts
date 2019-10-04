@@ -33,4 +33,11 @@ export class ContactComponent implements OnInit {
       message: ''
     });
   }
+
+  onSubmit() {
+    this.feedback = this.feedbackForm.value;  //We can do so IFF both model are exactly the same.
+    console.log(this.feedback);
+    this.feedbackForm.reset();
+  }
 }
+  
