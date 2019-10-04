@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Feedback, ContactType } from '../shared/feedback';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { stringify } from '@angular/core/src/util';
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +10,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  feedbackForm: FormGroup;
+  feedback: Feedback;
+  contactTYpe = ContactType;
+
+  constructor(private formBuilder: FormBuilder) {
+    this.createForm();
+   }
 
   ngOnInit() {
   }
 
+  // when createForm() is called, the reactive form will be created. 
+  // But we need to map this into the view/template
+  createForm() {
+    this.feedbackForm = this.formBuilder.group({
+      firstname: '',
+      lastname: '',
+      telnum: 0,
+      email: '',
+      agree: false,
+      contacttype: 'None',
+      message: ''
+    });
+  }
 }

@@ -34,5 +34,47 @@
         <h4>Map of our Location</h4>
       </div>
     </div>
+  </div> 
+
+  <div fxFlex fxFlexOffset="20px" class="form-size">
+    <h3>Send us your feedback!</h3>
+    <!-- the [formGroup] will tight us into the specified reactive form model -->
+    <form novalidate [formGroup]="feedbackForm"> 
+      <p>
+        <mat-form-field class="half-width">
+          <!-- the "formControlName" will bind the input with the property defined in the form model. -->
+          <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
+        </mat-form-field> 
+        <mat-form-field class="half-width">
+          <input matInput formControlName="lastname" placeholder="Last Name" type="text" required>
+        </mat-form-field> 
+      </p>
+      <p>
+        <mat-form-field class="half-width">
+          <input matInput formControlName="telnum" placeholder="Tel. Number" type="tel">
+        </mat-form-field> 
+        <mat-form-field class="half-width"> 
+          <input matInput formControlName="email" placeholder="Email" type="email" required>
+        </mat-form-field> 
+      </p>  
+      <table class="form-size">
+        <td>
+          <mat-slide-toggle formControlName="agree">May we contact you?</mat-slide-toggle>
+        </td>
+        <td>
+          <mat-select placeholder="How?" formControlName="contacttype">
+            <mat-option *ngFor="let ctype of contactType" [value]="ctype">
+              {{ ctype }}
+            </mat-option>
+          </mat-select>
+        </td>
+      </table>
+      <p>
+        <mat-form-field class="full-width">
+          <textarea matInput formContrlName="message" placeholder="Your feed back..." rows=12></textarea>
+        </mat-form-field>
+      </p>
+      <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>   
+    </form>
   </div>
 </div>
