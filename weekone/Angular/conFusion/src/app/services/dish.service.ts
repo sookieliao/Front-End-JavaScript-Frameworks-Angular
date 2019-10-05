@@ -12,18 +12,23 @@ export class DishService {
   // we configure getDishes() to return promise by enclosing this dish object inside a promise. 
   // If the promise resolves then the result delivered by the getDishes promise would be a dish array.
   getDishes():Promise<Dish[]>{
-    return Promise.resolve(DISHES);  
-    // Promise.resolve(object) is only used for cases when we know we can return the results IMMEDIATELY.
-    // later we'll synchronize delay to have a taste of another promise.then() method.
-  
+    return new Promise( resolve => {
+      // simulate server laterncy with 2 seconds latency
+      setTimeout(() => resolve(DISHES), 2000);  // this setTimeout() will error out in 2 mins and return the resolve() method.
+    });  
   }
 
   getDish(id: string): Promise<Dish>{
-    return Promise.resolve(DISHES.filter((dish) => (dish.id === id))[0]);
+    return new Promise( resolve => {
+      // simulate server laterncy with 2 seconds latency
+      setTimeout(() => resolve((DISHES.filter((dish) => (dish.id === id))[0])), 2000);  // this setTimeout() will error out in 2 mins and return the resolve() method.
+    });  
   }
-
+  
   getFeaturedDish(): Promise<Dish>{
-    return Promise.resolve(DISHES.filter((dish) => (dish.featured))[0]);
-
+    return new Promise( resolve => {
+      // simulate server laterncy with 2 seconds latency
+      setTimeout(() => resolve(DISHES.filter((dish) => (dish.featured))[0]), 2000);  // this setTimeout() will error out in 2 mins and return the resolve() method.
+    });
   }
 }
