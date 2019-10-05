@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Dish } from '../shared/dish';
 import { DISHES } from '../shared/dishes';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +11,18 @@ export class DishService {
 
   constructor() { }
 
-  // we configure getDishes() to return promise by enclosing this dish object inside a promise. 
-  // If the promise resolves then the result delivered by the getDishes promise would be a dish array.
+  // we can convert an observable to promise by toPromise()
+  // Limitation: promises will emit only one item, while observables are based on streams.
   getDishes():Promise<Dish[]>{
-    return new Promise( resolve => {
-      // simulate server laterncy with 2 seconds latency
-      setTimeout(() => resolve(DISHES), 2000);  // this setTimeout() will error out in 2 mins and return the resolve() method.
-    });  
+    // if we just need to return one value, we can use of(), which takes whatever value you wanna return.
+    return of(DISHES).pipe(delay(2000)).toPromise();
   }
 
   getDish(id: string): Promise<Dish>{
-    return new Promise( resolve => {
-      // simulate server laterncy with 2 seconds latency
-      setTimeout(() => resolve((DISHES.filter((dish) => (dish.id === id))[0])), 2000);  // this setTimeout() will error out in 2 mins and return the resolve() method.
-    });  
+    return of(DISHES.filter((dish) => (dish.id === id))[0]).pipe(delay(2000)).toPromise();
   }
   
   getFeaturedDish(): Promise<Dish>{
-    return new Promise( resolve => {
-      // simulate server laterncy with 2 seconds latency
-      setTimeout(() => resolve(DISHES.filter((dish) => (dish.featured))[0]), 2000);  // this setTimeout() will error out in 2 mins and return the resolve() method.
-    });
+    return of(DISHES.filter((dish) => (dish.featured))[0]).pipe(delay(2000)).toPromise();
   }
 }
