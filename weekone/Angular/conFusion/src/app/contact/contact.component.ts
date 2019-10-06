@@ -23,7 +23,7 @@ export class ContactComponent implements OnInit {
     "message":''
   };
 
-  validationMessage = {
+  validationMessages = {
     'firstname':{
       'required':'First name is required.',
       'minlength':'Must have at least 2 characters.',
@@ -73,7 +73,7 @@ export class ContactComponent implements OnInit {
       We'll use the valueChanges observable on my feedback form.  
     */
     this.feedbackForm.valueChanges
-      .subscribe( data => this.onValueChanged(data));
+      .subscribe(data => this.onValueChanged(data));
 
     this.onValueChanged(); // (re)set form validation messages.
   }
@@ -93,24 +93,24 @@ export class ContactComponent implements OnInit {
     this.feedbackFormDirective.resetForm(); // this will reset the template.
   }
 
-  onValueChanged(data?: any){
+  onValueChanged(data?: any) {
     if (!this.feedbackForm) { return; }
     const form = this.feedbackForm;
-    for (const field in this.formErrors){
-      if(this.formErrors.hasOwnProperty(field)){
-        // clear previous error message  (if any)
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message (if any)
         this.formErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
-          const messages = this.validationMessage[field];
+          const messages = this.validationMessages[field];
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
-              this.formErrors[field] =+ messages[key]+ ' ';
+              this.formErrors[field] += messages[key] + ' ';
             }
           }
         }
       }
     }
   }
-}
+
   
