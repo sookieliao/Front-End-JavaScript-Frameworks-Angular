@@ -13,7 +13,7 @@
           <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src={{dish.image}} alt={{dish.name}}>
+      <img mat-card-image src="{{baseURL + dish.image}}" alt={{dish.name}}>
       <mat-card-content>
         <p>{{dish.description}}</p>
       </mat-card-content>
@@ -59,14 +59,12 @@
           <!-- using thumLabel and tickInterval to show the tick among the slider-bar -->
           <mat-slider thumLabel formControlName="rating" min='1' max='5' step='1.0' tickInterval="1"  value='5'></mat-slider>
         <p>
-      </p>
-      <p>
+
         <mat-form-field fxFlex>
-          <textarea matInput formControlName="comment" placeholder="Your comment..." rows=12 required>
-          </textarea>
+          <textarea matInput formControlName="comment" placeholder="Your comment..." rows=12 required></textarea>
           <mat-error *ngIf="formErrors.comment">
-            {{ formErrors.comment}}
-          </mat-error>
+              {{ formErrors.comment }}
+            </mat-error>
         </mat-form-field>
       </p>
       <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
