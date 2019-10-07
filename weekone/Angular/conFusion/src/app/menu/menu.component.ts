@@ -12,13 +12,18 @@ import { DishService } from '../services/dish.service';
 export class MenuComponent implements OnInit {
 
   dishes: Dish[];
+  errMess: string[];
 
   constructor(private dishService: DishService,
       @Inject('BaseURL') private baseURL) { }
 
   // whenever this component is created, ngOnInit() gets called.
   ngOnInit() {
-    this.dishService.getDishes().subscribe((dishes) => this.dishes = dishes);
+    this.dishService.getDishes()
+      .subscribe((dishes) => this.dishes = dishes,
+        errmess => this.errMess = <any>errmess);
+        // if, when we subscribe, an observable is returned, it'll be handled by the first method.
+        // if an error is returned instead, we'll handle it and assign it to errMess.
   }
 
 }

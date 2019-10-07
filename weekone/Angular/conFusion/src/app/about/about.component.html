@@ -66,9 +66,13 @@
           </mat-list-item>
         </mat-list>
     </div>
-    <div [hidden]="leaders">  <!-- this will be shown if the previous div isn't shown.-->
+    <div [hidden]="leaders || errMess">  <!-- this will be shown if the previous div isn't shown.-->
       <mat-spinner></mat-spinner> <h4>Loading... Please wait.</h4>
     </div> 
+    <div fxFlex *ngIf="errMess">
+      <h2>Error</h2>
+      <h4>{{errMess}}</h4>
+    </div>
   </div>
 </div>
 

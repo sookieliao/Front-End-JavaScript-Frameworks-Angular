@@ -11,12 +11,17 @@ import { Leader } from '../shared/leader';
 export class AboutComponent implements OnInit {
 
   leaders: Leader[];
+  errMess: string[];
+
 
   constructor(private leaderService: LeaderService,
       @Inject('BaseURL') private baseURL) { }
 
   ngOnInit() {
-    this.leaderService.getLeaders().subscribe((leader) => this.leaders = leader);
+    this.leaderService.getLeaders()
+      .subscribe(
+        leader => this.leaders = leader,
+        errmess => this.errMess = <any>errmess);
   }
 
 }
