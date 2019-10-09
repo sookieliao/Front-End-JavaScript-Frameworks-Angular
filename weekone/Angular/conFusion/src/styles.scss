@@ -53,3 +53,10 @@ body {
 .active {
     background: $background-moredark;
 }
+
+.highlight {
+  background-color: $background-pale;
+  border: 1px solid $primary-color-dark;
+  z-index: 1;  // the focused item will be lifted up a little bit
+  transform: scale(1.01); // scale it up a little bit
+}
