@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { DishService} from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { visibility } from '../animations/app.animation'
+import { visibility, flyInOut, expand } from '../animations/app.animation'
 import { MatSliderModule } from '@angular/material/slider';
 import { Subscriber } from 'rxjs';
 
@@ -14,8 +14,14 @@ import { Subscriber } from 'rxjs';
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
+  host: {
+    '[@flyInOut]':'true',
+    'style':'display:block'
+  },
   animations: [
-    visibility()
+    visibility(),
+    visibility(),
+    expand()
   ]
 })
 export class DishdetailComponent implements OnInit {
