@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Feedback, ContactType } from '../shared/feedback';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { flyInOut } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
+
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -14,11 +16,18 @@ import { flyInOut } from '../animations/app.animation';
     flyInOut()
   ]
 })
+
 export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  showFeedback: Feedback;
+  hasFeedback: boolean;
   contactType = ContactType;
+  errMess: string[];
+  clearFeedback : boolean;
+  initialLoad: boolean;
+
   @ViewChild('fform') feedbackFormDirective; // this gives us access to the template form.
 
   formErrors = {
@@ -53,11 +62,14 @@ export class ContactComponent implements OnInit {
     }
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private feedbackService: FeedbackService) {
     this.createForm();
    }
 
   ngOnInit() {
+    this.initialLoad = true;
+    this.clearFeedback = true;
   }
 
   // when createForm() is called, the reactive form will be created. 
@@ -86,7 +98,17 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     this.feedback = this.feedbackForm.value;  //We can do so IFF both model are exactly the same.
-    console.log(this.feedback);
+    
+
+    // call feedbackService to post the data
+    this.feedbackService.putFeedback(this.feedback)
+      .subscribe(feedback => {
+        this.showFeedback = feedback; console.log(this.showFeedback); this.clearFeedback = false; setTimeout(() => this.removeConfirmedFeedback() , 5000);;
+      },
+      errmess => {
+        this.showFeedback = null; this.errMess = <any>errmess;
+      })
+
     this.feedbackForm.reset({    //reset() takes one object property, to which it's going to reset to values.
       firstname: '',
       lastname: '',
@@ -97,6 +119,11 @@ export class ContactComponent implements OnInit {
       message: ''
     });
     this.feedbackFormDirective.resetForm(); // this will reset the template.
+  }
+
+  removeConfirmedFeedback() {
+    this.showFeedback = null;
+    this.clearFeedback = true;
   }
 
   onValueChanged(data?: any) {
